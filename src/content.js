@@ -367,13 +367,23 @@ function appendBadges(target, ratings, source) {
   const showTeacher = ratings.length > 1;
 
   for (const rating of ratings) {
-    const badge = document.createElement("span");
+    const badge = document.createElement("a");
     badge.className = `${BADGE_CLASS}${rating.score < 3.5 ? ` ${BADGE_LOW_CLASS}` : ""}`;
-    badge.title = buildTitle(rating);
+    badge.title = buildTitle(rating) + " — 点击查看选课社区详情";
     const teacherLabel = showTeacher && rating.matchedTeacher
       ? `${rating.matchedTeacher} `
       : "";
     badge.textContent = `⭐ ${teacherLabel}${Number(rating.score).toFixed(1)}`;
+
+    if (rating.id) {
+      badge.href = `https://course.sjtu.plus/course/${rating.id}`;
+      badge.target = "_blank";
+      badge.rel = "noopener noreferrer";
+    } else {
+      badge.style.cursor = "default";
+      badge.style.textDecoration = "none";
+    }
+
     target.appendChild(badge);
   }
 

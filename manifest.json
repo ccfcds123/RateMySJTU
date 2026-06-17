@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "RateMySJTU",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "在上海交通大学教学信息服务网选课页标注选课社区评分。",
   "permissions": ["storage", "alarms", "tabs"],
   "host_permissions": [
