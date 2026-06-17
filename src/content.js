@@ -151,7 +151,7 @@ function annotateSubRows(localCodeMap) {
     if (ratings.length) {
       appendBadges(teacherCell, ratings, "subRow");
     } else {
-      appendNoRatingBadge(teacherCell);
+      appendNoRatingBadge(teacherCell, courseName);
     }
     annotated += 1;
   }
@@ -390,11 +390,34 @@ function appendBadges(target, ratings, source) {
   target.setAttribute(MARKED_ATTR, "true");
 }
 
-function appendNoRatingBadge(target) {
+function appendNoRatingBadge(target, courseName) {
   if (target.querySelector(`.${BADGE_CLASS}`)) return;
-  const badge = document.createElement("span");
+
+  let courseId = null;
+  if (courseName) {
+    const nameKey = normalizeText(courseName);
+    courseId = ratingIndex[nameKey]?.id;
+    if (!courseId) {
+      for (const key of ratingKeys) {
+        if (key.startsWith(nameKey + "::")) {
+          courseId = ratingIndex[key]?.id;
+          if (courseId) break;
+        }
+      }
+    }
+  }
+
+  const badge = document.createElement(courseId ? "a" : "span");
   badge.className = `${BADGE_CLASS} ${BADGE_NONE_CLASS}`;
   badge.textContent = "无评分";
+
+  if (courseId) {
+    badge.href = `https://course.sjtu.plus/course/${courseId}`;
+    badge.target = "_blank";
+    badge.rel = "noopener noreferrer";
+    badge.title = "点击查看选课社区详情";
+  }
+
   target.appendChild(document.createTextNode(" "));
   target.appendChild(badge);
   target.setAttribute(MARKED_ATTR, "true");
