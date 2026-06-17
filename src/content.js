@@ -72,7 +72,7 @@ function buildLocalCodeMap() {
   const allElements = document.querySelectorAll("td, th, span, div, a, li, h1, h2, h3, h4, h5, h6, p, label");
   for (const el of allElements) {
     const text = (el.textContent || "").trim();
-    const match = text.match(/\(([A-Z]{2,5}\d{4,6})\)\s*(.+)/);
+    const match = text.match(/\(([A-Z]{2,5}\d{3,6})\)\s*(.+)/);
     if (!match) continue;
 
     const code = match[1].toUpperCase();
@@ -99,7 +99,7 @@ function findParentCourseName(subRow, targetCode) {
   let el = subRow.parentElement;
   for (let depth = 0; depth < 8 && el && el !== document.body; depth += 1) {
     const text = (el.textContent || "").trim();
-    const match = text.match(/\(([A-Z]{2,5}\d{4,6})\)\s*(.+)/);
+    const match = text.match(/\(([A-Z]{2,5}\d{3,6})\)\s*(.+)/);
     if (match && match[1].toUpperCase() === targetCode) {
       let name = match[2].replace(/\s*⭐\s*\d+(\.\d+)?/g, "").trim();
       name = name.split(/\s{2,}| {2,}|\t|\n|- \d|教学班|学分|状态/)[0].trim();
@@ -119,7 +119,7 @@ function annotateSubRows(localCodeMap) {
     if (isMainCourseRow(row)) continue;
 
     const rowText = row.textContent || "";
-    const classMatch = rowText.match(/([A-Z]{2,5}\d{4,6})-\d{1,3}/);
+    const classMatch = rowText.match(/([A-Z]{2,5}\d{3,6})-\d{1,3}/);
     const bracketTeacher = rowText.match(/【(.+?)】/);
 
     if (!classMatch || !bracketTeacher) continue;
@@ -171,7 +171,7 @@ function annotateTables() {
       const rowText = row.textContent || "";
 
       // Skip sub-rows (already handled by annotateSubRows)
-      if (rowText.match(/([A-Z]{2,5}\d{4,6})-\d{1,3}/) && rowText.match(/【(.+?)】/)) continue;
+      if (rowText.match(/([A-Z]{2,5}\d{3,6})-\d{1,3}/) && rowText.match(/【(.+?)】/)) continue;
 
       if (columns.name < 0) continue;
       const nameCell = cells[columns.name];
@@ -295,10 +295,10 @@ function extractTeacherFromRow(row) {
 
 function isMainCourseRow(row) {
   const text = (row.textContent || "").trim();
-  if (/\([A-Z]{2,5}\d{4,6}\)/.test(text)) return true;
+  if (/\([A-Z]{2,5}\d{3,6}\)/.test(text)) return true;
   // Bare course code without sub-row markers (no CODE-NN, no 【】)
-  if (/[A-Z]{2,5}\d{4,6}/.test(text) &&
-      !/[A-Z]{2,5}\d{4,6}-\d{1,3}/.test(text) &&
+  if (/[A-Z]{2,5}\d{3,6}/.test(text) &&
+      !/[A-Z]{2,5}\d{3,6}-\d{1,3}/.test(text) &&
       !/【/.test(text)) return true;
   return false;
 }
