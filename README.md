@@ -18,9 +18,9 @@
 
 ## 使用
 
-1. **登录选课社区**：打开 [course.sjtu.plus](https://course.sjtu.plus) 并登录（需要 jQuery 账号）。
+1. **登录选课社区**：打开 [course.sjtu.plus](https://course.sjtu.plus) 并登录（需要 Jaccount 账号）。
 2. **刷新评分数据**：点击浏览器工具栏中的 RateMySJTU 图标，在弹窗中点击「刷新数据」。
-3. **打开选课页**：访问[交大选课页面](https://i.sjtu.edu.cn/xsxk/zzxkyzb_cxZzxkYzbIndex.html?gnmkdm=N253512&layout=default)，点击课程旁的「展开」，即可在每位教师旁看到评分。
+3. **打开选课页**：访问[交大选课页面](https://i.sjtu.edu.cn)，点击课程旁的「展开」，即可在每位教师旁看到评分。
 
 ## 技术说明
 
