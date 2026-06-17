@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "RateMySJTU",
+  "version": "0.2.1",
+  "description": "在上海交通大学教学信息服务网选课页标注选课社区评分。",
+  "permissions": ["storage", "alarms", "tabs"],
+  "host_permissions": [
+    "https://course.sjtu.plus/*",
+    "https://i.sjtu.edu.cn/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://course.sjtu.plus/*"],
+      "js": ["src/course-bridge.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://i.sjtu.edu.cn/xsxk/zzxkyzb_cxZzxkYzbIndex.html*"
+      ],
+      "js": ["src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "RateMySJTU",
+    "default_popup": "src/popup.html"
+  }
+}

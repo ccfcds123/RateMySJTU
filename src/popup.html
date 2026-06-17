@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RateMySJTU</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>RateMySJTU</h1>
+          <p>交大选课评分标注</p>
+        </div>
+        <span id="state" class="pill">待刷新</span>
+      </header>
+
+      <section class="stats">
+        <div>
+          <span>有效评分</span>
+          <strong id="courseCount">0</strong>
+        </div>
+        <div>
+          <span>索引条目</span>
+          <strong id="indexCount">0</strong>
+        </div>
+        <div>
+          <span>接口读取</span>
+          <strong id="fetchedCount">0</strong>
+        </div>
+        <div>
+          <span>API 总量</span>
+          <strong id="totalCount">—</strong>
+        </div>
+      </section>
+
+      <p id="summary">正在读取本地评分库...</p>
+
+      <button id="refresh" type="button">刷新数据</button>
+
+      <p id="status" role="status"></p>
+
+      <nav>
+        <a href="https://course.sjtu.plus" target="_blank" rel="noreferrer">打开选课社区</a>
+        <a href="https://i.sjtu.edu.cn/xsxk/zzxkyzb_cxZzxkYzbIndex.html?gnmkdm=N253512&layout=default" target="_blank" rel="noreferrer">打开选课页</a>
+      </nav>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
