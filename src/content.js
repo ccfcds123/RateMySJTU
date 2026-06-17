@@ -151,7 +151,7 @@ function annotateSubRows(localCodeMap) {
     if (ratings.length) {
       appendBadges(teacherCell, ratings, "subRow");
     } else {
-      appendNoRatingBadge(teacherCell, courseName);
+      appendNoRatingBadge(teacherCell, courseName, courseCode);
     }
     annotated += 1;
   }
@@ -390,18 +390,31 @@ function appendBadges(target, ratings, source) {
   target.setAttribute(MARKED_ATTR, "true");
 }
 
-function appendNoRatingBadge(target, courseName) {
+function appendNoRatingBadge(target, courseName, courseCode) {
   if (target.querySelector(`.${BADGE_CLASS}`)) return;
 
   let courseId = null;
   if (courseName) {
-    const nameKey = normalizeText(courseName);
-    courseId = ratingIndex[nameKey]?.id;
+    // First try to find a rating whose code matches exactly
+    if (courseCode) {
+      for (const rating of Object.values(ratingIndex)) {
+        if (rating.code && rating.code.toUpperCase() === courseCode) {
+          courseId = rating.id;
+          break;
+        }
+      }
+    }
+
+    // Fall back to name-based lookup
     if (!courseId) {
-      for (const key of ratingKeys) {
-        if (key.startsWith(nameKey + "::")) {
-          courseId = ratingIndex[key]?.id;
-          if (courseId) break;
+      const nameKey = normalizeText(courseName);
+      courseId = ratingIndex[nameKey]?.id;
+      if (!courseId) {
+        for (const key of ratingKeys) {
+          if (key.startsWith(nameKey + "::")) {
+            courseId = ratingIndex[key]?.id;
+            if (courseId) break;
+          }
         }
       }
     }
